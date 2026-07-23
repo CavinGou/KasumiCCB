@@ -1,6 +1,7 @@
-name: BangAvatar
-desc: BanGDream 风格卡片渲染 - 娶群友/qqy/ccb
+name: KasumiCCB
+desc: 提取自kasumi的娶群友功能
+origin: https://github.com/Kasumi-Games/kasumi-next
 help: 发送 娶群友 随机抽取群成员并显示 BanGDream 风格卡牌
 version: v1.0.0
-author: jmt059
-repo: https://github.com/jmt059/DailyWife
+author: CavinGou
+repo: https://github.com/CavinGou/KasumiCCB

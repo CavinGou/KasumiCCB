@@ -38,8 +38,8 @@ class GroupMember:
         return f"{self.card or self.nickname}({self.user_id})"
 
 
-@register("BangAvatar", "jmt059", "BanGDream风格卡片渲染插件", "v1.0.0")
-class BangAvatarPlugin(Star):
+@register("KasumiCCB", "CavinGou", "提取自kasumi的娶群友功能", "v1.0.0")
+class KasumiCCBPlugin(Star):
     def __init__(self, context: Context, config: dict):
         super().__init__(context)
         self.config = config
@@ -61,9 +61,9 @@ class BangAvatarPlugin(Star):
                 if not parsed.hostname or not parsed.port:
                     raise ValueError(f"无效的Napcat地址格式: {host}")
 
-            logger.info(f"✅ BangAvatar: 已加载 {len(self.napcat_hosts)} 个Napcat主机")
+            logger.info(f"✅ KasumiCCB: 已加载 {len(self.napcat_hosts)} 个Napcat主机")
         except Exception as e:
-            raise RuntimeError(f"BangAvatar: Napcat配置错误: {e}")
+            raise RuntimeError(f"KasumiCCB: Napcat配置错误: {e}")
 
     def _get_current_napcat_host(self):
         if not hasattr(self, 'napcat_hosts') or not self.napcat_hosts:
@@ -77,9 +77,9 @@ class BangAvatarPlugin(Star):
         try:
             src_path = PLUGIN_DIR / "bang_avatar" / "resources"
             await ensure_resources(src_path)
-            logger.info("✅ BangAvatar: 资源初始化完成")
+            logger.info("✅ KasumiCCB: 资源初始化完成")
         except Exception as e:
-            logger.error(f"❌ BangAvatar: 资源初始化失败: {e}")
+            logger.error(f"❌ KasumiCCB: 资源初始化失败: {e}")
 
     async def _get_members(self, group_id: str) -> Optional[List[GroupMember]]:
         """通过 NapCat API 获取群成员列表"""
@@ -100,7 +100,7 @@ class BangAvatarPlugin(Star):
                             if members:
                                 return members
             except Exception:
-                logger.error(f"BangAvatar: 连接 {host} 失败: {traceback.format_exc()}")
+                logger.error(f"KasumiCCB: 连接 {host} 失败: {traceback.format_exc()}")
 
         return None
 
@@ -113,7 +113,7 @@ class BangAvatarPlugin(Star):
                     if resp.status == 200 and 'image' in resp.headers.get('Content-Type', ''):
                         return await resp.read()
         except Exception as e:
-            logger.error(f"BangAvatar: 下载头像失败: {e}")
+            logger.error(f"KasumiCCB: 下载头像失败: {e}")
         return None
 
     async def _generate_card(self, user_id: str, target_id: str) -> Optional[Image]:
@@ -121,7 +121,7 @@ class BangAvatarPlugin(Star):
         try:
             src_path = PLUGIN_DIR / "bang_avatar" / "resources"
             if not (src_path / "card-2.png").exists():
-                logger.warning("BangAvatar: 资源未就绪")
+                logger.warning("KasumiCCB: 资源未就绪")
                 return None
 
             avatar_bytes = await self._fetch_avatar_bytes(target_id)
@@ -132,7 +132,7 @@ class BangAvatarPlugin(Star):
             card_bytes = await render_card(wife_data, src_path, avatar_bytes=avatar_bytes)
             return Image.fromBytes(card_bytes)
         except Exception:
-            logger.error(f"BangAvatar: 生成卡片失败: {traceback.format_exc()}")
+            logger.error(f"KasumiCCB: 生成卡片失败: {traceback.format_exc()}")
             return None
 
     # --------------- 命令 ---------------
@@ -179,5 +179,5 @@ class BangAvatarPlugin(Star):
             yield event.chain_result(message_elements)
 
         except Exception:
-            logger.error(f"BangAvatar: 异常: {traceback.format_exc()}")
+            logger.error(f"KasumiCCB: 异常: {traceback.format_exc()}")
             yield event.plain_result("❌ 发生异常，请联系开发者")
