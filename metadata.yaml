@@ -1,0 +1,6 @@
+name: BangAvatar
+desc: BanGDream 风格卡片渲染 - 娶群友/qqy/ccb
+help: 发送 娶群友 随机抽取群成员并显示 BanGDream 风格卡牌
+version: v1.0.0
+author: jmt059
+repo: https://github.com/jmt059/DailyWife
