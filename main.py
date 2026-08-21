@@ -178,7 +178,7 @@ class KasumiCCBPlugin(Star):
         return None
 
     # --------------- 命令 ---------------
-    @filter.regex(r"^/block\s+.*")
+    @filter.command("block")
     async def block_command(self, event: AstrMessageEvent):
         """拉黑用户，使其不再能被娶群友抽到（仅管理员可用）"""
         if not hasattr(event.message_obj, "group_id"):
@@ -210,7 +210,7 @@ class KasumiCCBPlugin(Star):
         logger.info(f"KasumiCCB: 管理员 {event.get_sender_id()} 在群 {group_id} 拉黑了 {target_id}")
         yield event.plain_result(f"✅ 已拉黑用户 {target_id}，该用户将不再被娶群友抽到。")
 
-    @filter.regex(r"^/unblock\s+.*")
+    @filter.command("unblock")
     async def unblock_command(self, event: AstrMessageEvent):
         """解除用户拉黑（仅管理员可用）"""
         if not hasattr(event.message_obj, "group_id"):
